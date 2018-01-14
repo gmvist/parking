@@ -28,9 +28,11 @@ public class BasicPricingPolicy implements IPricingPolicy {
   /**
    * Computes the parking fee by multiplying the numbers of hours with the price per hour.
    *
+   * @param car the billed car
+   * @param parkingSlot the billed parking slot
    * @param arrivalTime the arrival time.
    * @param departureTime the departure time.
-   * @return the parking fee.
+   * @return the bill object
    */
   public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {
 

@@ -29,9 +29,11 @@ public abstract class PricingPolicyDecorator implements IPricingPolicy{
   /**
    * The bill method of the concrete pricing policy to enhance.
    *
+   * @param car the billed car
+   * @param parkingSlot the billed parking slot
    * @param arrivalTime the arrival time.
    * @param departureTime the departure time.
-   * @return the amount of the parking fee.
+   * @return the bill object
    */
   @Override
   public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {

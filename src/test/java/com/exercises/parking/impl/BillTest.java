@@ -11,6 +11,10 @@ import java.util.Date;
 
 import static junit.framework.TestCase.assertEquals;
 
+/**
+ *  Test the Bill class
+ *  @author mghita
+ */
 public class BillTest {
 
   IParkingSlot parkingSlot;

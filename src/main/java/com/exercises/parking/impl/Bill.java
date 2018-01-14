@@ -6,6 +6,9 @@ import com.exercises.parking.api.IParkingSlot;
 
 import java.util.Date;
 
+/**
+ * Billing implementation
+ */
 public class Bill implements IBill {
 
   private final double parkingFee;
@@ -18,6 +21,14 @@ public class Bill implements IBill {
 
   private final IParkingSlot parkingSlot;
 
+  /**
+   * Construct the bill
+   * @param car
+   * @param parkingSlot
+   * @param arrivalTime
+   * @param departureTime
+   * @param parkingFee
+   */
   public Bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime, double parkingFee) {
 
     this.car = car;
@@ -27,26 +38,46 @@ public class Bill implements IBill {
     this.parkingFee = parkingFee;
   }
 
+  /**
+   *
+   * @return the parking fee
+   */
   @Override
   public double getParkingFee() {
     return this.parkingFee;
   }
 
+  /**
+   *
+   * @return the arrival time
+   */
   @Override
   public Date getArrivalTime() {
     return this.arrivalTime;
   }
 
+  /**
+   *
+   * @return the departure time
+   */
   @Override
   public Date getDepartureTime() {
     return this.departureTime;
   }
 
+  /**
+   *
+   * @return the billed car
+   */
   @Override
   public ICar getCar() {
     return this.car;
   }
 
+  /**
+   *
+   * @return the parking slot
+   */
   @Override
   public IParkingSlot getParkingSlot() {
     return parkingSlot;

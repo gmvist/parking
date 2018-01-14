@@ -32,9 +32,11 @@ public class EntryFeePricingPolicy extends PricingPolicyDecorator {
   /**
    * Adds the entry fee to the amount computed by the concrete pricing policy to enhance.
    *
+   * @param car the billed car
+   * @param parkingSlot the billed parking slot
    * @param arrivalTime the arrival time.
    * @param departureTime the departure time.
-   * @return
+   * @return the bill object
    */
   @Override
   public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {
