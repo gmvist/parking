@@ -35,6 +35,6 @@ public interface IParking {
    * @return the amount of parking fee to pay.
    * @throws ParkingException when the car is not registered in the parking.
    */
-  double checkOut(ICar car, Date departureTime) throws ParkingException;
+  IBill checkOut(ICar car, Date departureTime) throws ParkingException;
 
 }

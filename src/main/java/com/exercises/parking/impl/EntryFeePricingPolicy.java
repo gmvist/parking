@@ -1,7 +1,6 @@
 package com.exercises.parking.impl;
 
-import com.exercises.parking.api.IPricingPolicy;
-import com.exercises.parking.api.PricingPolicyDecorator;
+import com.exercises.parking.api.*;
 
 import java.util.Date;
 
@@ -38,8 +37,9 @@ public class EntryFeePricingPolicy extends PricingPolicyDecorator {
    * @return
    */
   @Override
-  public double bill(Date arrivalTime, Date departureTime) {
-
-    return entryFee + super.bill(arrivalTime, departureTime);
+  public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {
+    double decoratorFee = super.bill(car, parkingSlot, arrivalTime, departureTime).getParkingFee();
+    double fee = entryFee + decoratorFee;
+    return new Bill(car, parkingSlot, arrivalTime, departureTime, fee);
   }
 }

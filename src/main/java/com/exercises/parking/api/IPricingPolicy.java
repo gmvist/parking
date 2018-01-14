@@ -16,6 +16,6 @@ public interface IPricingPolicy {
    * @param departureTime the departure time.
    * @return the amount of the parking fee.
    */
-  double bill(Date arrivalTime, Date departureTime );
+  IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime);
 
 }

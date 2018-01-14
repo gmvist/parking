@@ -1,6 +1,6 @@
 package com.exercises.parking.impl;
 
-import com.exercises.parking.api.IPricingPolicy;
+import com.exercises.parking.api.*;
 
 import java.util.Date;
 
@@ -32,9 +32,10 @@ public class BasicPricingPolicy implements IPricingPolicy {
    * @param departureTime the departure time.
    * @return the parking fee.
    */
-  public double bill(Date arrivalTime, Date departureTime) {
+  public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {
 
     double hours = (double)(departureTime.getTime()-arrivalTime.getTime())/(1000*3600);
-    return hours*pricePerHour;
+    double fee = hours * pricePerHour;
+    return new Bill(car, parkingSlot, arrivalTime, departureTime, fee);
   }
 }

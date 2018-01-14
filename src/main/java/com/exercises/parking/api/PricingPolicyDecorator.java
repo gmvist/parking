@@ -34,8 +34,8 @@ public abstract class PricingPolicyDecorator implements IPricingPolicy{
    * @return the amount of the parking fee.
    */
   @Override
-  public double bill(Date arrivalTime, Date departureTime) {
+  public IBill bill(ICar car, IParkingSlot parkingSlot, Date arrivalTime, Date departureTime) {
 
-    return pricingPolicy.bill(arrivalTime, departureTime);
+    return pricingPolicy.bill(car, parkingSlot, arrivalTime, departureTime);
   }
 }

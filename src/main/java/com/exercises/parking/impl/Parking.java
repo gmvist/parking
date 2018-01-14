@@ -1,9 +1,6 @@
 package com.exercises.parking.impl;
 
-import com.exercises.parking.api.ICar;
-import com.exercises.parking.api.IParkingSlot;
-import com.exercises.parking.api.IPricingPolicy;
-import com.exercises.parking.api.IParking;
+import com.exercises.parking.api.*;
 import com.exercises.parking.api.exceptions.exceptions.ParkingException;
 
 import java.util.Date;
@@ -87,7 +84,7 @@ public class Parking implements IParking {
    * @throws ParkingException when the car is not registered in the parking.
    */
   @Override
-  public double checkOut(ICar car, Date departureTime) throws ParkingException{
+  public IBill checkOut(ICar car, Date departureTime) throws ParkingException{
 
     // check if the car exists in the parking.
     if(parkedCars.get(car) == null){
@@ -105,6 +102,6 @@ public class Parking implements IParking {
     //add the parking slot to the available parking slots list.
     freeParkingSlots.add(parkingSlot);
 
-    return pricingPolicy.bill(arrivalTime, departureTime);
+    return pricingPolicy.bill(car, parkingSlot, arrivalTime, departureTime);
   }
 }

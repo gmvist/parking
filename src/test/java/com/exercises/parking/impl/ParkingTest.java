@@ -1,9 +1,6 @@
 package com.exercises.parking.impl;
 
-import com.exercises.parking.api.CarType;
-import com.exercises.parking.api.ICar;
-import com.exercises.parking.api.IParking;
-import com.exercises.parking.api.IParkingSlot;
+import com.exercises.parking.api.*;
 import com.exercises.parking.api.exceptions.exceptions.ParkingException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -198,7 +195,7 @@ public class ParkingTest {
 
   private void carCheckOut(ICar car, Date departureTime, long freeSlots, long typeFreeSlots, double expectedBill) throws ParkingException {
 
-    double bill = parking.checkOut(car, departureTime);
+    IBill bill = parking.checkOut(car, departureTime);
 
     //check the parking has expectedTotalFreeSlotsLeft parking slots left
     assertEquals(freeSlots, freeParkingSlots.size());
@@ -209,7 +206,7 @@ public class ParkingTest {
             .collect(Collectors.counting()).longValue());
 
     //check the bill
-    assertEquals(expectedBill, bill);
+    assertEquals(expectedBill, bill.getParkingFee());
 
   }
 
