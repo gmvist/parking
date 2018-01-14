@@ -1,0 +1,12 @@
+# IDE #
+.idea
+*.iml
+
+
+# Maven #
+target
+
+# MAC OS #
+.DS_Store
+__MACOSX
+
