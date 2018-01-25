@@ -2,7 +2,7 @@
 
 The Toll Parking Library represents a java API to simulate a Toll Parking behavior.
 
-```
+
 ## Requirements
 A toll parking contains multiple **parking slots** of different types :
  - the standard parking slots for sedan cars (gasoline-powered)
@@ -24,7 +24,7 @@ Cars of all types come in and out randomly, the API must :
 
 Wanted outcome :
 - A Java API ready to use, tested, documented (how to build from sources, how to use the API).
-```
+
 
 ## Design Choices
 
@@ -67,13 +67,14 @@ The API objects are created by identifying their data and responsibilities (beha
 
 #### IParkingSlot
 - can be used by a car.
-- can be of several types which correspond in a bijective way with the car types.
+- can be of several types, each parking slot type corresponding to a car type.
 
 #### ICar 
 - represents a customer for the parking.
 - can be of several types
 
-The ICar can park or unpark on a IParkingSlot, so it has been implemented as a Visitor Design Pattern on the ParkingSlot structure.
+The ICar can park or unpark on/from a IParkingSlot, so it has been implemented as a Visitor Design Pattern on the IParkingSlot element structure.
+
 The choice of a Visitor can be seen as overkilling for the current requirements, but it keeps the design highly extensible if other Car and ParkingSlots
 objects are added with more complex placing constraints. In this case, the design remains the same and the API doesn't need to change it's initial contract. 
 
@@ -83,17 +84,17 @@ objects are added with more complex placing constraints. In this case, the desig
         - electric with 20kw power supply
         - electric with 50kw power supply
 
-As the ICar and IParkingSlot interfaces can be declined only on their type (which is the same for the current requirement - CarType) the design can be simplified by coupling the both hierarchies by the CarType.
-Each declined hierarchy has only one class:
+As the ICar and IParkingSlot are bounded in a bijective way, the design can be simplified. Instead of creating three subclasses for each ICar type and three subclasses for each IParkingSlot type, both derived hierarchies are reduced to a single class:
 - Car for ICar
 - ParkingSlot for IParkingSlot.
 
-In this way the design remains straightforward, but allows the further addition of other ICar and IParkingSlots types if needed. If the added hierarchies are to heterogeneous, they can be decoupled by completely removing the CarType and implement the corresponding visitor methods between the specific Car and ParkingSlot objects. 
+In this way the design remains straightforward, but allows the further addition of other ICar and IParkingSlots types if needed.
+If the added hierarchies become too heterogeneous regarding the parking rules, they can be decoupled from the CarType attribute and implement the corresponding visitor methods between the specific ICar and IParkingSlot objects. 
 
 
 #### IPricingPolicy
 - computes parking fees to bill the customer.
-- it can be extended without modifyng the API by using a Decorator design pattern.
+- it can be extended without modifying the API by using a Decorator design pattern.
 
 
 ## How to build from the sources
@@ -155,7 +156,7 @@ Code example usage:
 
     // car leaves the parking and get billed
     try{
-        double bill = parking.checkOut(car, departureTime);
+        IBill bill = parking.checkOut(car, departureTime);
     } catch (ParkingException e) {
       // manage exception case
     }
