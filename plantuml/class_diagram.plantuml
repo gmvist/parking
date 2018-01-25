@@ -1,0 +1,172 @@
+@startuml
+
+enum CarType {
+ SEDAN
+ ELECTRIC_20KW
+ ELECTRIC_50KW
+}
+
+interface ICar <<visitor API>> {
+
++CarType getType()
+
++void park(IParkingSlot, Date)
+
++void unpark(IParkingSlot, Date)
+
+}
+
+class Car <<concrete visitor>>{
+
+CarType type
+
++park(IParkingSlot, Date)
+
++unpark(IParkingSlot, Date)
+
+}
+
+interface IParking <<service API>>{
+
+IParkingSlot checkIn(ICar, Date) throws ParkingException
+IBill checkOut(ICar, Date) throws ParkingException
+
+}
+
+class Parking <<service implementation>>{
+
+-Set<IParkingSlot> freeParkingSlots
+
+-Map<ICar,IParkingSlot> parkedCars
+
+-IPricingPolicy pricingPolicy
+
++IParkingSlot checkIn(ICar car, Date arrivalTime)
+
++IBill checkOut(ICar car, Date departureTime)
+
+}
+
+interface IParkingSlot  <<visited element  API>> {
+
+boolean acceptCar(ICar, Date)
+
+boolean releaseCar(ICar, Date)
+
+CarType getType()
+
+Date getArrivalTime()
+
+}
+
+class ParkingSlot <<concrete visited element>>{
+
+-CarType type
+
+-Date arrivalTime
+
+-ICar usedBy
+
++boolean acceptCar(ICar, Date)
+
++boolean releaseCar(ICar, Date)
+
+}
+
+interface IPricingPolicy <<pricing API>>{
+
+IBill bill(ICar, IParkingSlot, Date, Date)
+
+}
+
+interface IBill <<billing API>> {
+
+double getParkingFee()
+
+Date getArrivalTime()
+
+Date getDepartureTime()
+
+ICar getCar()
+
+IParkingSlot getParkingSlot()
+
+}
+
+class Bill <<billing implementation>> {
+
+-double parkingFee;
+
+-Date arrivalTime;
+
+-Date departureTime;
+
+-ICar car;
+
+-IParkingSlot parkingSlot;
+
++double getParkingFee()
+
++Date getArrivalTime()
+
++Date getDepartureTime()
+
++ICar getCar()
+
++IParkingSlot getParkingSlot()
+
+}
+
+abstract class PricingPolicyDecorator <<decorator>> {
+
+-IPricingPolicy pricingPolicy
+
++IBill bill(ICar, IParkingSlot, Date, Date)
+
+}
+
+class EntryFeePricingPolicy <<decorated class>>{
+
+-double entryFee
+
++IBill bill(ICar, IParkingSlot, Date, Date)
+
+}
+
+class BasicPricingPolicy <<core class>>{
+
+-double pricePerHour
+
++IBill bill(ICar, IParkingSlot, Date, Date)
+
+}
+
+ICar <|-- Car
+
+IParking <|-- Parking
+
+IParkingSlot <|-- ParkingSlot
+
+IBill <|-- Bill
+
+IPricingPolicy --> IBill
+
+IPricingPolicy <|-down- PricingPolicyDecorator
+
+IPricingPolicy <|-down- BasicPricingPolicy
+
+PricingPolicyDecorator o-up- IPricingPolicy
+
+EntryFeePricingPolicy -up-> PricingPolicyDecorator
+
+Parking -left-> ICar
+
+Parking -right-> IParkingSlot
+
+Parking -down-> IPricingPolicy
+
+IParkingSlot -up- CarType
+
+ICar -up- CarType
+
+@enduml

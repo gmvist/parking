@@ -1,0 +1,33 @@
+@startuml
+
+actor API_Client
+
+API_Client --> IParking : request car checkin
+
+activate IParking
+
+IParking --> IParkingSlot : find parking slot to accept car
+
+activate IParkingSlot
+
+IParkingSlot --> ICar : acceptCar()
+
+activate ICar
+
+ICar  --> IParkingSlot : park()
+
+deactivate ICar
+
+IParkingSlot --> IParking : car accepted
+
+deactivate IParkingSlot
+
+IParking --> API_Client : car parked on the parking slot
+
+IParkingSlot --> IParking : car not accepted
+
+IParking --> API_Client : parking slot not found, car rejected
+
+deactivate IParking
+
+@enduml

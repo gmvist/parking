@@ -1,0 +1,29 @@
+@startuml
+
+actor API_Client
+
+activate IParking
+
+API_Client --> IParking : request car checkout
+
+activate IParkingSlot
+
+IParking --> IParkingSlot : getArrivalTime()
+
+activate ICar
+
+IParkingSlot --> ICar : releaseCar()
+
+ICar --> IParkingSlot : unpark()
+
+deactivate ICar
+
+IParkingSlot --> IParking : parking slot free
+
+deactivate IParkingSlot
+
+IParking --> API_Client : generate bill
+
+deactivate IParking
+
+@enduml
